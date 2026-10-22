@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
@@ -56,8 +55,7 @@ export default function CompletedTodosWorkspace({
           .some((value) => value.toLowerCase().includes(query));
 
       const matchesProject =
-        projectFilter === "ALL" ||
-        todo.projectId === projectFilter;
+        projectFilter === "ALL" || todo.projectId === projectFilter;
 
       return matchesSearch && matchesProject;
     });
@@ -65,8 +63,7 @@ export default function CompletedTodosWorkspace({
     return result.sort((a, b) => {
       if (sortBy === "DEADLINE") {
         return (
-          new Date(a.deadlineAt).getTime() -
-          new Date(b.deadlineAt).getTime()
+          new Date(a.deadlineAt).getTime() - new Date(b.deadlineAt).getTime()
         );
       }
 
@@ -211,13 +208,14 @@ export default function CompletedTodosWorkspace({
       </section>
 
       {filteredTodos.length > 0 ? (
-        <section className="space-y-4">
+        <section className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
           {filteredTodos.map((todo) => (
-            <div key={todo.id} className="space-y-2">
+            <div key={todo.id} className="flex min-w-0 flex-col gap-2">
               <div className="flex flex-wrap items-center justify-between gap-2 px-1">
                 <p className="text-xs font-medium text-slate-500">
                   Project: {todo.project?.name || "Unknown project"}
                 </p>
+
                 <p className="text-xs text-emerald-700">
                   Completed{" "}
                   {todo.completedAt
@@ -230,13 +228,19 @@ export default function CompletedTodosWorkspace({
                 </p>
               </div>
 
-              <TodoCard
-                todo={todo}
-                currentUser={currentUser}
-                isAdmin={isAdmin}
-                disabled={isPending}
-                onStatusChange={handleStatusChange}
-              />
+              <div className="grid min-w-0 grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
+                {filteredTodos.map((todo) => (
+                  <div key={todo.id} className="min-w-0">
+                    <TodoCard
+                      todo={todo}
+                      currentUser={currentUser}
+                      isAdmin={isAdmin}
+                      disabled={isPending}
+                      onStatusChange={handleStatusChange}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </section>

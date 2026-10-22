@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
@@ -103,9 +102,7 @@ export default function ProjectTodoWorkspace({
       (todo) => todo.status === "IN_PROGRESS",
     ).length;
 
-    const pending = todos.filter(
-      (todo) => todo.status === "PENDING",
-    ).length;
+    const pending = todos.filter((todo) => todo.status === "PENDING").length;
 
     return {
       total,
@@ -327,11 +324,7 @@ export default function ProjectTodoWorkspace({
       return;
     }
 
-    submitStatusChange(
-      completionTodo,
-      "COMPLETED",
-      completionMessage.trim(),
-    );
+    submitStatusChange(completionTodo, "COMPLETED", completionMessage.trim());
   }
 
   function handleReopenSubmit(event) {
@@ -416,13 +409,13 @@ export default function ProjectTodoWorkspace({
 
           {!isActive && (
             <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
-              This project is {project.status.toLowerCase()}. Creating new
-              Todos is disabled until the project is active.
+              This project is {project.status.toLowerCase()}. Creating new Todos
+              is disabled until the project is active.
             </div>
           )}
 
           {filteredTodos.length > 0 ? (
-            <section className="min-w-0 space-y-2.5">
+            <section className="grid min-w-0 grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
               {filteredTodos.map((todo) => (
                 <TodoCard
                   key={todo.id}

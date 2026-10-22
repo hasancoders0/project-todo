@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
@@ -42,12 +41,8 @@ export default function AllTodosWorkspace({
     () => ({
       ALL: todos.length,
       PENDING: todos.filter((todo) => todo.status === "PENDING").length,
-      IN_PROGRESS: todos.filter(
-        (todo) => todo.status === "IN_PROGRESS",
-      ).length,
-      COMPLETED: todos.filter(
-        (todo) => todo.status === "COMPLETED",
-      ).length,
+      IN_PROGRESS: todos.filter((todo) => todo.status === "IN_PROGRESS").length,
+      COMPLETED: todos.filter((todo) => todo.status === "COMPLETED").length,
     }),
     [todos],
   );
@@ -92,10 +87,7 @@ export default function AllTodosWorkspace({
         projectFilter === "ALL" || todo.projectId === projectFilter;
 
       return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesPriority &&
-        matchesProject
+        matchesSearch && matchesStatus && matchesPriority && matchesProject
       );
     });
 
@@ -111,8 +103,7 @@ export default function AllTodosWorkspace({
 
       if (sortBy === "CREATED") {
         return (
-          new Date(b.createdAt).getTime() -
-          new Date(a.createdAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       }
 
@@ -125,18 +116,10 @@ export default function AllTodosWorkspace({
       }
 
       return (
-        new Date(a.deadlineAt).getTime() -
-        new Date(b.deadlineAt).getTime()
+        new Date(a.deadlineAt).getTime() - new Date(b.deadlineAt).getTime()
       );
     });
-  }, [
-    todos,
-    search,
-    statusFilter,
-    priorityFilter,
-    projectFilter,
-    sortBy,
-  ]);
+  }, [todos, search, statusFilter, priorityFilter, projectFilter, sortBy]);
 
   const modalProjects = useMemo(
     () =>
@@ -253,10 +236,7 @@ export default function AllTodosWorkspace({
               : "Todo reopened successfully.",
         );
       } catch (err) {
-        showToast(
-          err?.message || "Unable to update this Todo.",
-          "error",
-        );
+        showToast(err?.message || "Unable to update this Todo.", "error");
       }
     });
   }
@@ -269,11 +249,7 @@ export default function AllTodosWorkspace({
       return;
     }
 
-    submitStatusChange(
-      completionTodo,
-      "COMPLETED",
-      completionMessage.trim(),
-    );
+    submitStatusChange(completionTodo, "COMPLETED", completionMessage.trim());
   }
 
   function handleReopenSubmit(event) {
@@ -309,10 +285,7 @@ export default function AllTodosWorkspace({
         await deleteTodo(formData);
         showToast("Todo deleted successfully.");
       } catch (err) {
-        showToast(
-          err?.message || "Unable to delete this Todo.",
-          "error",
-        );
+        showToast(err?.message || "Unable to delete this Todo.", "error");
       }
     });
   }
@@ -443,22 +416,24 @@ export default function AllTodosWorkspace({
       </section>
 
       {filteredTodos.length ? (
-        <section className="space-y-3">
+        <section className="grid grid-cols-1 items-stretch gap-4 xl:grid-cols-2">
           {filteredTodos.map((todo) => (
-            <div key={todo.id} className="space-y-2">
+            <div key={todo.id} className="flex min-w-0 flex-col gap-2">
               <p className="px-1 text-xs font-medium text-slate-500">
                 Project: {todo.project?.name || "Unknown project"}
               </p>
 
-              <TodoCard
-                todo={todo}
-                currentUser={currentUser}
-                isAdmin={isAdmin}
-                disabled={isPending}
-                onEdit={openEditModal}
-                onStatusChange={handleStatusChange}
-                onDelete={handleDeleteTodo}
-              />
+              <div className="min-w-0 flex-1">
+                <TodoCard
+                  todo={todo}
+                  currentUser={currentUser}
+                  isAdmin={isAdmin}
+                  disabled={isPending}
+                  onEdit={openEditModal}
+                  onStatusChange={handleStatusChange}
+                  onDelete={handleDeleteTodo}
+                />
+              </div>
             </div>
           ))}
         </section>

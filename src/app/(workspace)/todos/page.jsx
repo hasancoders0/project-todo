@@ -178,7 +178,7 @@ export default async function TodosPage() {
   }));
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
+    <main className="mx-auto w-full space-y-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-9">
       <header className="space-y-2">
         <p className="text-sm font-medium text-slate-500">
           Workspace / Todos
